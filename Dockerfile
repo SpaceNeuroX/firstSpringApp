@@ -1,14 +1,16 @@
+# Используем базовый образ OpenJDK 11
 FROM openjdk:11-jre-slim
 
 # Установите Maven
 RUN apt-get update && \
     apt-get install -y maven
 
-# Скопируйте исходный код в контейнер
-COPY . /app
-
-# Перейдите в директорию приложения
+# Установите рабочую директорию
 WORKDIR /app
+
+# Скопируйте pom.xml и файлы исходного кода в контейнер
+COPY pom.xml .
+COPY src ./src
 
 # Соберите проект с помощью Maven
 RUN mvn clean package
